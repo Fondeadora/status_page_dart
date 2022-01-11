@@ -1,17 +1,65 @@
 library status_page_dart;
 
-class Status {
-  String get status => 'status';
-}
+import 'package:json_annotation/json_annotation.dart';
+import 'package:dio/dio.dart';
+import 'package:retrofit/retrofit.dart';
 
-class Component {
-  Status component(String component) {
-    return Status();
-  }
-}
+part 'models/page.dart';
+
+part 'models/incident.dart';
+
+part 'models/component.dart';
+
+part 'network/status_page_api.dart';
+
+part 'status_page_dart.g.dart';
+
+part 'exceptions.dart';
 
 class StatusPage {
-  Component page(String page) {
-    return Component();
+  StatusPage({required String apiKey}) : _apiKey = apiKey;
+
+  final String _apiKey;
+  final _dio = Dio();
+  late final _statusPageApi = StatusPageApi(_dio, _apiKey);
+
+  Future<List<Page>> get pages {
+    return _statusPageApi.getPages().catchError((Object obj) {
+      switch (obj.runtimeType) {
+        case DioError:
+          throw _handleError((obj as DioError));
+        default:
+          break;
+      }
+    });
+  }
+
+  Future<Page> page(String pageId) async {
+    try {
+      Page page = await _statusPageApi.getPage(pageId);
+      page.components = await _statusPageApi.getComponents(pageId);
+      return page;
+    } on DioError catch (error) {
+      throw _handleError(error);
+    }
+  }
+
+  Exception _handleError(DioError error) {
+    switch (error.type) {
+      case DioErrorType.connectTimeout:
+      case DioErrorType.sendTimeout:
+      case DioErrorType.receiveTimeout:
+        return ConnectionException();
+      case DioErrorType.response:
+        if (error.response?.statusCode == 401) {
+          return AuthException();
+        } else {
+          return ResourceNotFoundException();
+        }
+      case DioErrorType.cancel:
+        return ConnectionException();
+      case DioErrorType.other:
+        return ConnectionException();
+    }
   }
 }
