@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:status_page_dart/status_page_dart.dart';
+import 'package:status_page_dart/status_page.dart';
 
 void main() async {
   const fondeadoraPage = 'db84f7w5kxpz';

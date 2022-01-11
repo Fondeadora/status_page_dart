@@ -12,7 +12,7 @@ part 'models/component.dart';
 
 part 'network/status_page_api.dart';
 
-part 'status_page_dart.g.dart';
+part 'status_page.g.dart';
 
 part 'exceptions.dart';
 

@@ -1,4 +1,4 @@
-part of '../status_page_dart.dart';
+part of '../status_page.dart';
 
 @RestApi(baseUrl: "https://api.statuspage.io/v1")
 abstract class StatusPageApi {
