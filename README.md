@@ -34,7 +34,8 @@ From here you can start using this package but we recommend to get couple other 
 
 On the same page, you'll find your page id, it should look something like this: 
 
-// Insert image
+![image](https://user-images.githubusercontent.com/8421789/149045182-6daaf2c3-75cc-45ff-ac4e-e4faf17daffe.png)
+
 
 ### Component Ids
 
