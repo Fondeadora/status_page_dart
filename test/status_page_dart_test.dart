@@ -37,7 +37,54 @@ void main() async {
     test('success when getting Apps móviles component status', () async {
       final page = await statusPage.page(fondeadoraPage);
       final component = page.component(mobileAppsComponent);
-      expect(component.status, ComponentStatus.operational);
+      expect(component.status, isNot(null));
+    });
+
+    test('success getting unresolved incidents', () async {
+      final unresolvedIncidents = await statusPage.incidents(fondeadoraPage);
+      expect(unresolvedIncidents, isNot(null));
+    });
+
+    test('success getting latest unresolved incident', () async {
+      final unresolvedIncidents = await statusPage.incidents(fondeadoraPage);
+      if (unresolvedIncidents.isNotEmpty) {
+        final latestIncident = unresolvedIncidents.latest;
+        expect(latestIncident, isNot(null));
+      }else{
+        try {
+          unresolvedIncidents.latest;
+        } catch (e) {
+          expect(e, isInstanceOf<NoLatestException>());
+        }
+      }
+    });
+
+    test('success getting incident updates', () async {
+      final unresolvedIncidents = await statusPage.incidents(fondeadoraPage);
+      if (unresolvedIncidents.isNotEmpty) {
+        final updatesList = unresolvedIncidents.latest.updates;
+        expect(updatesList, isNot(null));
+      }else{
+        try {
+          unresolvedIncidents.latest;
+        } catch (e) {
+          expect(e, isInstanceOf<NoLatestException>());
+        }
+      }
+    });
+
+    test('success getting incident update by component', () async {
+      final unresolvedIncidents = await statusPage.incidents(fondeadoraPage);
+      if (unresolvedIncidents.isNotEmpty) {
+        final latestUpdateMessage = unresolvedIncidents.latest.updates!.latest.body;
+        expect(latestUpdateMessage, isNot(null));
+      }else{
+        try {
+          unresolvedIncidents.latest;
+        } catch (e) {
+          expect(e, isInstanceOf<NoLatestException>());
+        }
+      }
     });
   });
 

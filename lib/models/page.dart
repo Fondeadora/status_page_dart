@@ -15,10 +15,12 @@ class Page {
 
   final String? id;
   final String? name;
+  @JsonKey(name: 'page_description')
   final String? pageDescription;
   final String? subdomain;
   final String? domain;
   final String? url;
+  @JsonKey(name: 'support_url')
   final String? supportUrl;
   List<Component>? components;
 

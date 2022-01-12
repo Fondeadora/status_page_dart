@@ -9,3 +9,7 @@ class ResourceNotFoundException implements Exception {
 class AuthException implements Exception {
   final String message = "The authentication failed, check the provided token";
 }
+
+class NoLatestException implements Exception {
+  final String message = "Should evaluate not empty before getting latest";
+}

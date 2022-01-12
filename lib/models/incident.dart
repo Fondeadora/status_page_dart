@@ -14,23 +14,30 @@ class Incident {
     this.startedAt,
     this.id,
     this.pageId,
-    this.incidentUpdates,
+    this.updates,
     this.components,
   });
 
   final String? name;
   final String? status;
+  @JsonKey(name: 'created_at')
   final DateTime? createdAt;
+  @JsonKey(name: 'updated_at')
   final DateTime? updatedAt;
+  @JsonKey(name: 'monitoring_at')
   final DateTime? monitoringAt;
+  @JsonKey(name: 'resolved_at')
   final DateTime? resolvedAt;
   final String? impact;
   final String? shortlink;
+  @JsonKey(name: 'started_at')
   final DateTime? startedAt;
   final String? id;
+  @JsonKey(name: 'page_id')
   final String? pageId;
-  final List<IncidentUpdate>? incidentUpdates;
-  final List<AffectedComponent>? components;
+  @JsonKey(name: 'incident_updates')
+  final List<IncidentUpdate>? updates;
+  final List<Component>? components;
 
   factory Incident.fromJson(Map<String, dynamic> json) =>
       _$IncidentFromJson(json);
@@ -53,11 +60,16 @@ class IncidentUpdate {
 
   final String? status;
   final String? body;
+  @JsonKey(name: 'created_at')
   final DateTime? createdAt;
+  @JsonKey(name: 'updated_at')
   final DateTime? updatedAt;
+  @JsonKey(name: 'display_at')
   final DateTime? displayAt;
   final String? id;
+  @JsonKey(name: 'incident_id')
   final String? incidentId;
+  @JsonKey(name: 'affected_components')
   final List<AffectedComponent>? affectedComponents;
 
   factory IncidentUpdate.fromJson(Map<String, dynamic> json) =>
@@ -77,7 +89,9 @@ class AffectedComponent {
 
   final String? code;
   final String? name;
+  @JsonKey(name: 'old_status')
   final String? oldStatus;
+  @JsonKey(name: 'new_status')
   final String? newStatus;
 
   factory AffectedComponent.fromJson(Map<String, dynamic> json) =>
