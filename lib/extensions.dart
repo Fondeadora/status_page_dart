@@ -2,18 +2,19 @@ part of '../status_page.dart';
 
 extension LatestIncident on List<Incident> {
   Incident get latest {
-    if(isNotEmpty) {
+    if (isNotEmpty) {
       return first;
-    }else{
+    } else {
       throw NoLatestException();
     }
   }
 }
+
 extension LatestIncidentUpdate on List<IncidentUpdate> {
   IncidentUpdate get latest {
-    if(isNotEmpty) {
+    if (isNotEmpty) {
       return first;
-    }else{
+    } else {
       throw NoLatestException();
     }
   }
