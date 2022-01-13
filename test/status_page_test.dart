@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:status_page_dart/status_page.dart';
+import 'package:status_page/status_page.dart';
 
 void main() async {
   const testPage = 'PAGE_ID';

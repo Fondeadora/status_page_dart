@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of status_page_dart;
+part of status_page;
 
 // **************************************************************************
 // JsonSerializableGenerator

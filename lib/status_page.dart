@@ -1,4 +1,4 @@
-library status_page_dart;
+library status_page;
 
 import 'package:json_annotation/json_annotation.dart';
 import 'package:dio/dio.dart';
