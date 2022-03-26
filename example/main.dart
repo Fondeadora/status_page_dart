@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:status_page_dart/status_page.dart';
+import 'package:status_page/status_page.dart';
 
 main() => runApp(MyApp());
 

@@ -1,4 +1,4 @@
-library status_page_dart;
+library status_page;
 
 import 'package:json_annotation/json_annotation.dart';
 import 'package:dio/dio.dart';
@@ -15,6 +15,8 @@ part 'network/status_page_api.dart';
 part 'status_page.g.dart';
 
 part 'exceptions.dart';
+
+part 'extensions.dart';
 
 class StatusPage {
   StatusPage({required String apiKey}) : _apiKey = apiKey;
@@ -39,6 +41,15 @@ class StatusPage {
       Page page = await _statusPageApi.getPage(pageId);
       page.components = await _statusPageApi.getComponents(pageId);
       return page;
+    } on DioError catch (error) {
+      throw _handleError(error);
+    }
+  }
+
+  Future<List<Incident>> incidents(String pageId) async {
+    try {
+      final incidents = await _statusPageApi.getUnresolvedIncidents(pageId);
+      return incidents;
     } on DioError catch (error) {
       throw _handleError(error);
     }
