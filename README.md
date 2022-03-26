@@ -19,6 +19,7 @@ Initially we support the following functionality:
 - Get specific page by id
 - Get list of components by page
 - Get component by id by page
+- Get page info and components summarized
 
 In the following versions we'll be adding more more functionality
 
@@ -45,9 +46,16 @@ to do this, go to you components page and look at the url, there you'll find eve
 
 https://manage.statuspage.io/pages/PAGE_ID/components/COMPONENT_ID/
 
+### Status Page Summary
+
+You can get the summarized status page information of your page using the summary function. 
+
+You just need to send the page domain, which looks something like this example: `status.example.app`.
+
 ## Usage
 
 ```dart
+
 final statusPage = StatusPage(apiKey: 'YOUR_API_KEY');
 
 final pages = await statusPage.pages;
@@ -58,5 +66,6 @@ final componentList = page.components;
 
 final component = page.component('COMPONENT_ID');
 
+final summary = StatusPage.summary(url: 'YOUR_DOMAIN_URL');
 
 ```
