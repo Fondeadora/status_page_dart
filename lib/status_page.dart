@@ -75,11 +75,18 @@ class StatusPage {
       case DioErrorType.other:
         return ConnectionException();
       case DioErrorType.response:
-        if (error.response?.statusCode == 401) {
-          return AuthException();
-        } else {
-          return ResourceNotFoundException();
-        }
+        return _handleCode(error.response?.statusCode ?? -1);
+    }
+  }
+
+  static Exception _handleCode(int statusCode) {
+    switch (statusCode) {
+      case 401:
+        return AuthException();
+      case 420:
+        return EnhanceYourCalmException();
+      default:
+        return ResourceNotFoundException();
     }
   }
 }

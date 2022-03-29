@@ -13,3 +13,8 @@ class AuthException implements Exception {
 class NoLatestException implements Exception {
   final String message = "Should evaluate not empty before getting latest";
 }
+
+class EnhanceYourCalmException implements Exception {
+  final String message =
+      "Total number of allowed requests has been reached by this lapse";
+}

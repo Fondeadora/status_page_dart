@@ -1,3 +1,7 @@
+## 0.1.3
+
+* Handling HTTP error 420 Enhance Your Calm.
+
 ## 0.1.2
 
 * Summary function added like optimization to avoid multiple calls to the StatusPage API.
