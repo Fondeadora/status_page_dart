@@ -1,31 +1,5 @@
 part of '../status_page.dart';
 
-@JsonSerializable()
-class Component {
-  Component({
-    this.id,
-    this.pageId,
-    this.name,
-    this.description,
-    this.position,
-    this.status,
-    this.showcase,
-  });
-
-  final String? id;
-  final String? pageId;
-  final String? name;
-  final String? description;
-  final int? position;
-  final ComponentStatus? status;
-  final bool? showcase;
-
-  factory Component.fromJson(Map<String, dynamic> json) =>
-      _$ComponentFromJson(json);
-
-  Map<String, dynamic> toJson() => _$ComponentToJson(this);
-}
-
 enum ComponentStatus {
   @JsonValue('operational')
   operational,
@@ -39,4 +13,64 @@ enum ComponentStatus {
   majorOutage,
   @JsonValue('')
   undefined,
+}
+
+@JsonSerializable()
+class Component {
+  const Component({
+    this.id,
+    this.name,
+    this.status,
+    this.position,
+    this.description,
+    this.showcase,
+  });
+
+  final String? id;
+  final String? name;
+  final ComponentStatus? status;
+  final int? position;
+  final String? description;
+  final bool? showcase;
+
+  factory Component.fromJson(Map<String, dynamic> json) =>
+      _$ComponentFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ComponentToJson(this);
+}
+
+@JsonSerializable()
+class SummaryComponent {
+  const SummaryComponent({
+    this.id,
+    this.name,
+    this.status,
+    this.createdAt,
+    this.updatedAt,
+    this.position,
+    this.description,
+    this.showcase,
+    this.startDate,
+    this.groupId,
+    this.group,
+    this.onlyShowIfDegraded,
+  });
+
+  final String? id;
+  final String? name;
+  final ComponentStatus? status;
+  final String? createdAt;
+  final String? updatedAt;
+  final int? position;
+  final String? description;
+  final bool? showcase;
+  final String? startDate;
+  final String? groupId;
+  final bool? group;
+  final bool? onlyShowIfDegraded;
+
+  factory SummaryComponent.fromJson(Map<String, dynamic> json) =>
+      _$SummaryComponentFromJson(json);
+
+  Map<String, dynamic> toJson() => _$SummaryComponentToJson(this);
 }

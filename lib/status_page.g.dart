@@ -6,6 +6,23 @@ part of status_page;
 // JsonSerializableGenerator
 // **************************************************************************
 
+SummaryPage _$SummaryPageFromJson(Map<String, dynamic> json) => SummaryPage(
+      id: json['id'] as String?,
+      name: json['name'] as String?,
+      url: json['url'] as String?,
+      timeZone: json['timeZone'] as String?,
+      updatedAt: json['updatedAt'] as String?,
+    );
+
+Map<String, dynamic> _$SummaryPageToJson(SummaryPage instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'url': instance.url,
+      'timeZone': instance.timeZone,
+      'updatedAt': instance.updatedAt,
+    };
+
 Page _$PageFromJson(Map<String, dynamic> json) => Page(
       id: json['id'] as String?,
       name: json['name'] as String?,
@@ -126,21 +143,19 @@ Map<String, dynamic> _$AffectedComponentToJson(AffectedComponent instance) =>
 
 Component _$ComponentFromJson(Map<String, dynamic> json) => Component(
       id: json['id'] as String?,
-      pageId: json['pageId'] as String?,
       name: json['name'] as String?,
-      description: json['description'] as String?,
-      position: json['position'] as int?,
       status: $enumDecodeNullable(_$ComponentStatusEnumMap, json['status']),
+      position: json['position'] as int?,
+      description: json['description'] as String?,
       showcase: json['showcase'] as bool?,
     );
 
 Map<String, dynamic> _$ComponentToJson(Component instance) => <String, dynamic>{
       'id': instance.id,
-      'pageId': instance.pageId,
       'name': instance.name,
-      'description': instance.description,
-      'position': instance.position,
       'status': _$ComponentStatusEnumMap[instance.status],
+      'position': instance.position,
+      'description': instance.description,
       'showcase': instance.showcase,
     };
 
@@ -152,6 +167,53 @@ const _$ComponentStatusEnumMap = {
   ComponentStatus.majorOutage: 'major_outage',
   ComponentStatus.undefined: '',
 };
+
+SummaryComponent _$SummaryComponentFromJson(Map<String, dynamic> json) =>
+    SummaryComponent(
+      id: json['id'] as String?,
+      name: json['name'] as String?,
+      status: $enumDecodeNullable(_$ComponentStatusEnumMap, json['status']),
+      createdAt: json['createdAt'] as String?,
+      updatedAt: json['updatedAt'] as String?,
+      position: json['position'] as int?,
+      description: json['description'] as String?,
+      showcase: json['showcase'] as bool?,
+      startDate: json['startDate'] as String?,
+      groupId: json['groupId'] as String?,
+      group: json['group'] as bool?,
+      onlyShowIfDegraded: json['onlyShowIfDegraded'] as bool?,
+    );
+
+Map<String, dynamic> _$SummaryComponentToJson(SummaryComponent instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'status': _$ComponentStatusEnumMap[instance.status],
+      'createdAt': instance.createdAt,
+      'updatedAt': instance.updatedAt,
+      'position': instance.position,
+      'description': instance.description,
+      'showcase': instance.showcase,
+      'startDate': instance.startDate,
+      'groupId': instance.groupId,
+      'group': instance.group,
+      'onlyShowIfDegraded': instance.onlyShowIfDegraded,
+    };
+
+Summary _$SummaryFromJson(Map<String, dynamic> json) => Summary(
+      page: json['page'] == null
+          ? null
+          : SummaryPage.fromJson(json['page'] as Map<String, dynamic>),
+      components: (json['components'] as List<dynamic>?)
+              ?.map((e) => SummaryComponent.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
+    );
+
+Map<String, dynamic> _$SummaryToJson(Summary instance) => <String, dynamic>{
+      'page': instance.page,
+      'components': instance.components,
+    };
 
 // **************************************************************************
 // RetrofitGenerator

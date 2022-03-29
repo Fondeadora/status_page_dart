@@ -10,6 +10,8 @@ part 'models/incident.dart';
 
 part 'models/component.dart';
 
+part 'models/summary.dart';
+
 part 'network/status_page_api.dart';
 
 part 'status_page.g.dart';
@@ -22,7 +24,7 @@ class StatusPage {
   StatusPage({required String apiKey}) : _apiKey = apiKey;
 
   final String _apiKey;
-  final _dio = Dio();
+  static final _dio = Dio();
   late final _statusPageApi = StatusPageApi(_dio, _apiKey);
 
   Future<List<Page>> get pages {
@@ -55,11 +57,22 @@ class StatusPage {
     }
   }
 
-  Exception _handleError(DioError error) {
+  static Future<Summary> summary({required String domain}) async {
+    try {
+      final response = await _dio.get('https://$domain/api/v2/summary.json');
+      return Summary.fromJson(response.data);
+    } on DioError catch (error) {
+      throw _handleError(error);
+    }
+  }
+
+  static Exception _handleError(DioError error) {
     switch (error.type) {
       case DioErrorType.connectTimeout:
       case DioErrorType.sendTimeout:
       case DioErrorType.receiveTimeout:
+      case DioErrorType.cancel:
+      case DioErrorType.other:
         return ConnectionException();
       case DioErrorType.response:
         if (error.response?.statusCode == 401) {
@@ -67,10 +80,6 @@ class StatusPage {
         } else {
           return ResourceNotFoundException();
         }
-      case DioErrorType.cancel:
-        return ConnectionException();
-      case DioErrorType.other:
-        return ConnectionException();
     }
   }
 }

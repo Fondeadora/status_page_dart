@@ -1,3 +1,7 @@
+## 0.1.2
+
+* Summary function added like optimization to avoid multiple calls to the StatusPage API.
+
 ## 0.1.1
 
 * Added support for unresolved incidents.
