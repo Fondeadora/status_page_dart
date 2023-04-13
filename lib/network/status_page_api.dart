@@ -20,6 +20,19 @@ abstract class StatusPageApi {
   @GET("/pages/{pageId}/components")
   Future<List<Component>> getComponents(@Path() String pageId);
 
+  @GET("/pages/{pageId}/incidents")
+  Future<List<Incident>> getIncidents(@Path() String pageId);
+
+  @GET("/pages/{pageId}/incidents/active_maintenance")
+  Future<List<Incident>> getActiveMaintenanceIncidents(@Path() String pageId);
+
+  @GET("/pages/{pageId}/incidents/scheduled")
+  Future<List<Incident>> getScheduledIncidents(@Path() String pageId);
+
   @GET("/pages/{pageId}/incidents/unresolved")
   Future<List<Incident>> getUnresolvedIncidents(@Path() String pageId);
+
+  @GET("/pages/{pageId}/incidents/upcoming")
+  Future<List<Incident>> getUpcomingIncidents(@Path() String pageId);
 }
+

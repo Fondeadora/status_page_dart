@@ -1,6 +1,6 @@
 name: status_page
 description: Library to consume Atlassian's Status Page API from dart.
-version: 0.1.3
+version: 0.1.4
 homepage: https://github.com/Fondeadora/status_page_dart
 
 environment:

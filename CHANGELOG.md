@@ -1,3 +1,7 @@
+## 0.1.4
+
+* Extended support for all types of incidents.
+
 ## 0.1.3
 
 * Handling HTTP error 420 Enhance Your Calm.
