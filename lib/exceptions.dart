@@ -1,5 +1,7 @@
 part of 'status_page.dart';
 
+class UnexpectedException implements Exception {}
+
 class ConnectionException implements Exception {}
 
 class ResourceNotFoundException implements Exception {

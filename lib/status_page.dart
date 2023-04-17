@@ -35,7 +35,7 @@ class StatusPage {
         case DioError:
           throw _handleError((obj as DioError));
         default:
-          break;
+          throw UnexpectedException();
       }
     });
   }
@@ -50,7 +50,8 @@ class StatusPage {
     }
   }
 
-  Future<List<Incident>> incidents(String pageId, [IncidentType? incidentType]) async {
+  Future<List<Incident>> incidents(String pageId,
+      [IncidentType? incidentType]) async {
     try {
       switch (incidentType) {
         case IncidentType.maintenance:
@@ -63,7 +64,7 @@ class StatusPage {
           return await _statusPageApi.getUpcomingIncidents(pageId);
         default:
           return await _statusPageApi.getIncidents(pageId);
-        }
+      }
     } on DioError catch (error) {
       throw _handleError(error);
     }
