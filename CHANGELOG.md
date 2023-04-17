@@ -1,3 +1,7 @@
+## 0.2.1
+
+* Fixed analysis issue
+
 ## 0.2.0
 
 * Improved package score

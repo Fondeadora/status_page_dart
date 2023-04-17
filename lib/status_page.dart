@@ -73,7 +73,7 @@ class StatusPage {
   static Future<Summary> summary({required String domain}) async {
     try {
       final response = await _dio.get('https://$domain/api/v2/summary.json');
-      return Summary.fromJson(response.data);
+      return Summary.fromJson(response.data as Map<String, dynamic>);
     } on DioError catch (error) {
       throw _handleError(error);
     }
