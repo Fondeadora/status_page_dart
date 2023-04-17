@@ -19,6 +19,7 @@ Initially we support the following functionality:
 - Get specific page by id
 - Get list of components by page
 - Get component by id by page
+- Get list of incidents
 - Get page info and components summarized
 
 In the following versions we'll be adding more more functionality
@@ -65,6 +66,10 @@ final page = await statusPage.page('PAGE_ID');
 final componentList = page.components;
 
 final component = page.component('COMPONENT_ID');
+
+final incidentList = await statusPage.incidents;
+
+final unresolvedIncidents = await statusPage.incidents('PAGE_ID', IncidentType.unresolved);
 
 final summary = StatusPage.summary(url: 'YOUR_DOMAIN_URL');
 

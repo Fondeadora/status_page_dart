@@ -4,6 +4,8 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
+import 'enums/incident_type.dart';
+
 part 'models/page.dart';
 
 part 'models/incident.dart';
@@ -48,10 +50,20 @@ class StatusPage {
     }
   }
 
-  Future<List<Incident>> incidents(String pageId) async {
+  Future<List<Incident>> incidents(String pageId, [IncidentType? incidentType]) async {
     try {
-      final incidents = await _statusPageApi.getUnresolvedIncidents(pageId);
-      return incidents;
+      switch (incidentType) {
+        case IncidentType.maintenance:
+          return await _statusPageApi.getActiveMaintenanceIncidents(pageId);
+        case IncidentType.scheduled:
+          return await _statusPageApi.getScheduledIncidents(pageId);
+        case IncidentType.unresolved:
+          return await _statusPageApi.getUnresolvedIncidents(pageId);
+        case IncidentType.upcoming:
+          return await _statusPageApi.getUpcomingIncidents(pageId);
+        default:
+          return await _statusPageApi.getIncidents(pageId);
+        }
     } on DioError catch (error) {
       throw _handleError(error);
     }

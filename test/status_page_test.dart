@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:status_page/enums/incident_type.dart';
 import 'package:status_page/status_page.dart';
 
 void main() async {
@@ -68,16 +69,44 @@ void main() async {
       });
     });
 
+    test('success getting all incidents', () async {
+      await handleRateLimiting(() async {
+        final incidents = await statusPage.incidents(testPage);
+        expect(incidents, isNot(null));
+      });
+    });
+
+    test('success getting active maintenance incidents', () async {
+      await handleRateLimiting(() async {
+        final incidents = await statusPage.incidents(testPage, IncidentType.maintenance);
+        expect(incidents, isNot(null));
+      });
+    });
+
     test('success getting unresolved incidents', () async {
       await handleRateLimiting(() async {
-        final unresolvedIncidents = await statusPage.incidents(testPage);
-        expect(unresolvedIncidents, isNot(null));
+        final incidents = await statusPage.incidents(testPage, IncidentType.unresolved);
+        expect(incidents, isNot(null));
+      });
+    });
+
+    test('success getting scheduled incidents', () async {
+      await handleRateLimiting(() async {
+        final incidents = await statusPage.incidents(testPage, IncidentType.scheduled);
+        expect(incidents, isNot(null));
+      });
+    });
+
+    test('success getting upcoming incidents', () async {
+      await handleRateLimiting(() async {
+        final incidents = await statusPage.incidents(testPage, IncidentType.upcoming);
+        expect(incidents, isNot(null));
       });
     });
 
     test('success getting latest unresolved incident', () async {
       await handleRateLimiting(() async {
-        final unresolvedIncidents = await statusPage.incidents(testPage);
+        final unresolvedIncidents = await statusPage.incidents(testPage, IncidentType.unresolved);
         if (unresolvedIncidents.isNotEmpty) {
           final latestIncident = unresolvedIncidents.latest;
           expect(latestIncident, isNot(null));
