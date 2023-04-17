@@ -1,3 +1,7 @@
+## 0.2.0
+
+* Improved package score
+
 ## 0.1.4
 
 * Extended support for all types of incidents.
