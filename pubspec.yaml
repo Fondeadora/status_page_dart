@@ -10,15 +10,15 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  dio: ^4.0.4
+  dio: ">=4.0.4 <6.0.0"
   equatable: ^2.0.3
-  retrofit: ^3.0.1
+  retrofit: ">=3.0.1 <5.0.0"
   json_annotation: ^4.4.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^1.0.0
-  retrofit_generator: ^4.0.0
+  flutter_lints: ">=1.0.0 <3.0.0"
+  retrofit_generator: ">=4.0.0 <7.0.0"
   build_runner: any
   json_serializable: ^6.1.3
