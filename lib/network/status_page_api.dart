@@ -35,4 +35,3 @@ abstract class StatusPageApi {
   @GET("/pages/{pageId}/incidents/upcoming")
   Future<List<Incident>> getUpcomingIncidents(@Path() String pageId);
 }
-
