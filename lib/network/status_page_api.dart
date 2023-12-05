@@ -5,8 +5,8 @@ abstract class StatusPageApi {
   factory StatusPageApi(Dio dio, [String? apiKey]) {
     dio.options = BaseOptions(
       headers: {'authorization': apiKey},
-      receiveTimeout: 5000,
-      connectTimeout: 5000,
+      receiveTimeout: Duration(milliseconds: 5000),
+      connectTimeout: Duration(milliseconds: 5000),
     );
     return _StatusPageApi(dio);
   }

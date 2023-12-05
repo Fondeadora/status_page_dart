@@ -1,3 +1,7 @@
+## 0.3.0
+
+* Updated dio dependency
+
 ## 0.2.1
 
 * Fixed analysis issue

@@ -32,8 +32,8 @@ class StatusPage {
   Future<List<Page>> get pages {
     return _statusPageApi.getPages().catchError((Object obj) {
       switch (obj.runtimeType) {
-        case DioError:
-          throw _handleError((obj as DioError));
+        case DioException:
+          throw _handleError((obj as DioException));
         default:
           throw UnexpectedException();
       }
@@ -45,7 +45,7 @@ class StatusPage {
       Page page = await _statusPageApi.getPage(pageId);
       page.components = await _statusPageApi.getComponents(pageId);
       return page;
-    } on DioError catch (error) {
+    } on DioException catch (error) {
       throw _handleError(error);
     }
   }
@@ -65,7 +65,7 @@ class StatusPage {
         default:
           return await _statusPageApi.getIncidents(pageId);
       }
-    } on DioError catch (error) {
+    } on DioException catch (error) {
       throw _handleError(error);
     }
   }
@@ -74,21 +74,17 @@ class StatusPage {
     try {
       final response = await _dio.get('https://$domain/api/v2/summary.json');
       return Summary.fromJson(response.data as Map<String, dynamic>);
-    } on DioError catch (error) {
+    } on DioException catch (error) {
       throw _handleError(error);
     }
   }
 
-  static Exception _handleError(DioError error) {
+  static Exception _handleError(DioException error) {
     switch (error.type) {
-      case DioErrorType.connectTimeout:
-      case DioErrorType.sendTimeout:
-      case DioErrorType.receiveTimeout:
-      case DioErrorType.cancel:
-      case DioErrorType.other:
-        return ConnectionException();
-      case DioErrorType.response:
+      case DioExceptionType.badResponse:
         return _handleCode(error.response?.statusCode ?? -1);
+      default:
+        return ConnectionException();
     }
   }
 
