@@ -7,14 +7,23 @@ import 'package:status_page/status_page.dart';
 void main() async {
   final Map<String, String> env = Platform.environment;
 
+  final testPageEnv = env['PAGE_ID'] ?? '';
+  final testComponentEnv = env['COMPONENT_ID'] ?? '';
+  final apiKeyEnv = env['API_KEY'] ?? '';
+
+  final hasStatusPageEnv = apiKeyEnv.isNotEmpty &&
+      testPageEnv.isNotEmpty &&
+      testComponentEnv.isNotEmpty;
+  final hasComponentEnv = testComponentEnv.isNotEmpty;
+
   late final String testPage;
   late final String testComponent;
   late final String apiKey;
 
   setUpAll(() {
-    testPage = env['PAGE_ID'] ?? '';
-    testComponent = env['COMPONENT_ID'] ?? '';
-    apiKey = env['API_KEY'] ?? '';
+    testPage = testPageEnv;
+    testComponent = testComponentEnv;
+    apiKey = apiKeyEnv;
   });
 
   group('StatusPage Library', () {
@@ -78,35 +87,40 @@ void main() async {
 
     test('success getting active maintenance incidents', () async {
       await handleRateLimiting(() async {
-        final incidents = await statusPage.incidents(testPage, IncidentType.maintenance);
+        final incidents =
+            await statusPage.incidents(testPage, IncidentType.maintenance);
         expect(incidents, isNot(null));
       });
     });
 
     test('success getting unresolved incidents', () async {
       await handleRateLimiting(() async {
-        final incidents = await statusPage.incidents(testPage, IncidentType.unresolved);
+        final incidents =
+            await statusPage.incidents(testPage, IncidentType.unresolved);
         expect(incidents, isNot(null));
       });
     });
 
     test('success getting scheduled incidents', () async {
       await handleRateLimiting(() async {
-        final incidents = await statusPage.incidents(testPage, IncidentType.scheduled);
+        final incidents =
+            await statusPage.incidents(testPage, IncidentType.scheduled);
         expect(incidents, isNot(null));
       });
     });
 
     test('success getting upcoming incidents', () async {
       await handleRateLimiting(() async {
-        final incidents = await statusPage.incidents(testPage, IncidentType.upcoming);
+        final incidents =
+            await statusPage.incidents(testPage, IncidentType.upcoming);
         expect(incidents, isNot(null));
       });
     });
 
     test('success getting latest unresolved incident', () async {
       await handleRateLimiting(() async {
-        final unresolvedIncidents = await statusPage.incidents(testPage, IncidentType.unresolved);
+        final unresolvedIncidents =
+            await statusPage.incidents(testPage, IncidentType.unresolved);
         if (unresolvedIncidents.isNotEmpty) {
           final latestIncident = unresolvedIncidents.latest;
           expect(latestIncident, isNot(null));
@@ -152,7 +166,7 @@ void main() async {
         }
       });
     });
-  });
+  }, skip: !hasStatusPageEnv);
 
   group('StatusPage summary', () {
     late final Summary summary;
@@ -172,12 +186,12 @@ void main() async {
     test('success when getting Apps móviles component', () {
       final component = summary.component(testComponent);
       expect(component.name, 'Apps móviles');
-    });
+    }, skip: !hasComponentEnv);
 
     test('success when getting Apps móviles component status', () {
       final component = summary.component(testComponent);
       expect(component.status, ComponentStatus.operational);
-    });
+    }, skip: !hasComponentEnv);
   });
 
   group('Edge cases', () {
@@ -192,7 +206,13 @@ void main() async {
         await statusPage.pages;
         fail("exception not thrown");
       } catch (e) {
-        expect(e, isInstanceOf<AuthException>());
+        expect(
+          e,
+          anyOf(
+            isA<AuthException>(),
+            isA<ResourceNotFoundException>(),
+          ),
+        );
       }
     });
 

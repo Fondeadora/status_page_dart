@@ -3,8 +3,13 @@ part of '../status_page.dart';
 @RestApi(baseUrl: "https://api.statuspage.io/v1")
 abstract class StatusPageApi {
   factory StatusPageApi(Dio dio, [String? apiKey]) {
+    final headers = <String, dynamic>{};
+    if (apiKey != null && apiKey.isNotEmpty) {
+      headers['Authorization'] = 'OAuth $apiKey';
+    }
+
     dio.options = BaseOptions(
-      headers: {'authorization': apiKey},
+      headers: headers,
       receiveTimeout: Duration(milliseconds: 5000),
       connectTimeout: Duration(milliseconds: 5000),
     );
