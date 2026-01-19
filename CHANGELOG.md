@@ -1,3 +1,7 @@
+## 1.0.0
+
+* Update Statuspage auth header format
+
 ## 0.3.0
 
 * Updated dio dependency
